@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<bean id="logAop" class="och06_aop1.LogAop"/>
+	
+	<aop:config>
+		<!-- aspect - 핵심관심사와 횡단관심사를 엮어줌 ref= 참조 빈아이디와 똑같아야함 -->
+		<aop:aspect id="logger1" ref="logAop">
+			<!-- pointcut - 어디다가 엮을거냐? expression안에다가 within(패키지안)
+				.*=모든것 패키지안의 -->
+			<aop:pointcut id="pub1" expression="within(och06_aop1.S*)" />
+			<aop:around pointcut-ref="pub1" method="loggerAop"/>
+		</aop:aspect>
+	
+	</aop:config>
+	
+	<bean id="student" class="och06_aop1.Student">
+		<property name="name" value="연개소문"/>
+		<property name="age" value="50"/>
+		<property name="gradeNum" value="3"/>
+		<property name="classNum" value="5"/>
+	</bean>
+	
+	<bean id="worker" class="och06_aop1.Worker">
+		<property name="name" value="이순신"/>
+		<property name="age" value="35"/>
+		<property name="job" value="개발자"/>
+	</bean>
+</beans>
